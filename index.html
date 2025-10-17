@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>اختبار الدوال الأسية - مشروع يزن</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
+  
+  :root{
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --card: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --easy: #10b981;
+    --medium: #f59e0b;
+    --hard: #ef4444;
+    --shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  
+  *{box-sizing:border-box; margin:0; padding:0;}
+  
+  body{
+  font-family:"Almarai", Tahoma, Arial;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+  
+.page-section {
+  display: none;
+}
+
+.page-section.active {
+  display: block;
+}
+  
+.start-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+}
+  
+  .hero-card {
+    background: white;
+    border-radius: 30px;
+    padding: 60px 40px;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: var(--shadow);
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .math-icons {
+    font-size: 60px;
+    margin-bottom: 20px;
+    letter-spacing: 10px;
+  }
+  
+  .hero-title {
+
+    font-size: 42px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 15px;
+  }
+  
+  .hero-subtitle {
+    font-size: 24px;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+  }
+  
+  .project-info {
+    background: linear-gradient(135deg, #f0f4ff 0%, #f9f0ff 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px 0;
+    border: 2px solid #e0e7ff;
+  }
+  
+  .author-name {
+    font-size: 28px;
+    font-weight: 800;
+    color: #667eea;
+    margin-bottom: 10px;
+  }
+  
+  .project-details {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  
+  .start-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 20px 60px;
+    font-size: 22px;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+  
+  .start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+  }
+  
+ .level-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+  
+  .page-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 50px;
+    padding-top: 40px;
+  }
+  
+  .page-header h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  
+  .page-header p {
+    font-size: 20px;
+    opacity: 0.9;
+  }
+  
+  .levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .level-card {
+    background: white;
+    border-radius: 25px;
+    padding: 40px 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 4px solid transparent;
+  }
+  
+  .level-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  }
+  
+  .level-card.easy { border-color: var(--easy); }
+  .level-card.medium { border-color: var(--medium); }
+  .level-card.hard { border-color: var(--hard); }
+  
+  .level-icon {
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+  
+  .level-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 15px;
+  }
+  
+  .level-card.easy .level-title { color: var(--easy); }
+  .level-card.medium .level-title { color: var(--medium); }
+  .level-card.hard .level-title { color: var(--hard); }
+  
+  .level-desc {
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .level-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+  }
+  
+  .level-card.easy .level-badge { background: var(--easy); }
+  .level-card.medium .level-badge { background: var(--medium); }
+  .level-card.hard .level-badge { background: var(--hard); }
+  
+.quiz-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+} 
+  
+  .quiz-header {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .quiz-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  
+  .quiz-meta {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .score-badge {
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 16px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+  }
+  
+  .back-btn {
+    background: #6b7280;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+  
+  .back-btn:hover {
+    background: #4b5563;
+    transform: translateY(-2px);
+  }
+  
+  .qcard {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  
+  .panel-right, .panel-left {
+    min-width: 0;
+  }
+  
+  .funcTitle {
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+  }
+  
+  .asks {
+    color: #667eea;
+    font-size: 17px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    padding: 15px;
+    background: #f0f4ff;
+    border-radius: 12px;
+    border-right: 4px solid #667eea;
+  }
+  
+  canvas {
+    background: #f8f9fb;
+    border-radius: 15px;
+    border: 2px solid #e5e7eb;
+    width: 100% !important;
+    height: 300px !important;
+    margin-bottom: 15px;
+  }
+  
+  .options {
+    display: grid;
+    gap: 12px;
+  }
+  
+  .opt {
+    padding: 18px;
+    border-radius: 15px;
+    background: #f9fafb;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.3s;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .opt:hover:not(.answered) {
+    transform: translateX(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: #e5e7eb;
+  }
+  
+  .opt.correct {
+    border-color: var(--easy);
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--easy);
+  }
+  
+  .opt.wrong {
+    border-color: var(--hard);
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--hard);
+    opacity: 0.7;
+  }
+  
+  .opt.answered {
+    cursor: default;
+    pointer-events: none;
+  }
+  
+  .explanation-box {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #f1f5f9;
+    border-right: 5px solid;
+    line-height: 1.7;
+    font-size: 15px;
+    animation: slideIn 0.4s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .explanation-box.good { border-color: var(--easy); background: rgba(16, 185, 129, 0.05); }
+  .explanation-box.bad { border-color: var(--hard); background: rgba(239, 68, 68, 0.05); }
+  
+  .btn-hint {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    width: 100%;
+    margin-top: 15px;
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+  
+  .btn-hint:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  }
+  
+  .btn-finish {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 20px;
+    width: 100%;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s;
+    font-family: inherit;
+  }
+  
+  .btn-finish:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
+  }
+  
+  #finalScore {
+    background: white;
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 550px;
+    border: 5px solid #667eea;
+    display: none;
+  }
+  
+  #finalScore h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 36px;
+  }
+  
+  .final-grade {
+    font-size: 72px;
+    font-weight: 800;
+    margin: 25px 0;
+  }
+  
+  .grade-good { color: var(--easy); }
+  .grade-bad { color: var(--hard); }
+  
+  #finalMessage {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 20px 0;
+    color: var(--text-secondary);
+  }
+  
+  @media (max-width: 900px) {
+    .qcard {
+      grid-template-columns: 1fr;
+    }
+    .hero-card {
+      padding: 40px 25px;
+    }
+    .hero-title {
+      font-size: 32px;
+    }
+    .page-header h1 {
+      font-size: 36px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="startPage" class="page-section active start-page">
+  <div class="hero-card">
+    <div class="math-icons">📐📏📊📈∞</div>
+    <h1 class="hero-title">اختبار الدوال الأسّية التفاعلي</h1>
+    <p class="hero-subtitle">رياضيات ثالث ثانوي • الفصل الدراسي الأول</p>
+    
+    <div class="project-info">
+      <div class="author-name">👤 إعداد الطالب: يزن (Yazan)</div>
+      <div class="project-details">
+        📚 المادة: الرياضيات - درس الدوال الأسية<br>
+        🎯 عدد الأسئلة: 24 سؤال (8 لكل مستوى)<br>
+        ⏰ الوقت المقترح: 20 دقيقة<br>
+        🏆 الهدف: اختبار فهمك الشامل للدوال الأسية
+      </div>
+    </div>
+    
+    <button class="start-btn" onclick="goToLevelSelection()">ابدأ الاختبار الآن 🚀</button>
+  </div>
+</div>
+
+<div id="levelPage" class="page-section">
+  <div class="level-container">
+    <div class="page-header">
+      <h1>اختر مستوى الصعوبة 🎯</h1>
+      <p>كل مستوى يحتوي على 8 أسئلة متنوعة</p>
+    </div>
+    
+    <div class="levels-grid">
+      <div class="level-card easy" onclick="startQuiz('easy')">
+        <div class="level-icon">🟢</div>
+        <h2 class="level-title">سهل</h2>
+        <p class="level-desc">مفاهيم أساسية: المجال، المدى، نوع الدالة، والإزاحات البسيطة</p>
+        <span class="level-badge">8 أسئلة</span>
+      </div>
+      
+      <div class="level-card medium" onclick="startQuiz('medium')">
+        <div class="level-icon">🟡</div>
+        <h2 class="level-title">متوسط</h2>
+        <p class="level-desc">تحليل أعمق: خط التقارب، الإزاحات المركبة، ومقاطع المحاور</p>
+        <span class="level-badge">8 أسئلة</span>
+      </div>
+      
+      <div class="level-card hard" onclick="startQuiz('hard')">
+        <div class="level-icon">🔴</div>
+        <h2 class="level-title">صعب</h2>
+        <p class="level-desc">تحديات متقدمة: الانعكاس، التمدد، والتحويلات المعقدة</p>
+        <span class="level-badge">8 أسئلة</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="quizPage" class="page-section">
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <div>
+        <div class="quiz-title" id="quizTitle">اختبار المستوى</div>
+      </div>
+      <div class="quiz-meta">
+        <div class="score-badge">النتيجة: <span id="currentScore">0</span> / 8</div>
+        <button class="back-btn" onclick="backToLevelSelection()">← رجوع</button>
+      </div>
+    </div>
+    
+    <div id="questionsContainer"></div>
+    
+    <button id="finishBtn" class="btn-finish" onclick="showFinalScore()">إنهاء الاختبار ورؤية النتيجة 🏆</button>
+  </div>
+</div>
+
+<div id="finalScore">
+  <h2>نتيجتك النهائية 🎉</h2>
+  <p>لقد أجبت على:</p>
+  <div class="final-grade" id="finalGradeText"></div>
+  <p id="finalMessage"></p>
+  <button class="btn-hint" onclick="resetAndBackToLevels()">اختر مستوى آخر</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script>
+const allQuestions = {
+  easy: [
+    {funcStr:"f(x) = 2(3)^x", params:{a:2,base:3,shift:0,shiftSign:1,d:0}, asks:"المطلوب: المدى + نوع الدالة (نمو أم اضمحلال)", hint:"راجع الأساس (Base) لتحديد النوع، وقيمة 'd' لتحديد خط التقارب والمدى.", options:[{text:"المدى (0, ∞) — نمو",correct:true,explain:"صحيح: الأساس 3>1 يعني نمو، ولا إزاحة رأسية d=0 و a>0."},{text:"المدى (0, ∞) — اضمحلال",correct:false,explain:"خاطئ: الأساس 3>1 يعني نمو وليس اضمحلال."},{text:"المدى (2, ∞) — نمو",correct:false,explain:"خاطئ: a=2 تمدد رأسي ولا تؤثر على خط التقارب."},{text:"المدى (-∞, 0) — نمو",correct:false,explain:"خاطئ: a=2 موجب، لذلك القيم موجبة."}]},
+    {funcStr:"f(x) = 4^{x+1} - 5", params:{a:1,base:4,shift:1,shiftSign:1,d:-5}, asks:"المطلوب: خط التقارب + الإزاحة الأفقية", hint:"الإزاحة الرأسية تحدد خط التقارب. x+c يعني يسار.", options:[{text:"y = -5 — يسار 1",correct:true,explain:"صحيح: d=-5 خط التقارب، x+1 يسار 1."},{text:"y = 0 — يسار 1",correct:false,explain:"خاطئ: الإزاحة -5 تجعل خط التقارب y=-5."},{text:"y = -5 — يمين 1",correct:false,explain:"خاطئ: x+1 تعني يسار وليس يمين."},{text:"y = -5 — يسار 4",correct:false,explain:"خاطئ: الإزاحة 1 وحدة فقط."}]},
+    {funcStr:"f(x) = 5^x", params:{a:1,base:5,shift:0,shiftSign:1,d:0}, asks:"المطلوب: نوع الدالة + المجال", hint:"الأساس >1 نمو. المجال للدوال الأسية دائماً ℝ.", options:[{text:"نمو — المجال: ℝ",correct:true,explain:"صحيح: 5>1 نمو، والدوال الأسية معرفة لكل x."},{text:"اضمحلال — المجال: ℝ",correct:false,explain:"خاطئ: 5>1 يعني نمو."},{text:"نمو — المجال: (0, ∞)",correct:false,explain:"خاطئ: هذا المدى وليس المجال."},{text:"نمو — المجال: [0, ∞)",correct:false,explain:"خاطئ: المجال يشمل السالبة."}]},
+    {funcStr:"f(x) = 0.5(0.8)^x - 1", params:{a:0.5,base:0.8,shift:0,shiftSign:1,d:-1}, asks:"المطلوب: نوع الدالة + خط التقارب", hint:"الأساس بين 0 و 1 اضمحلال. d هو خط التقارب.", options:[{text:"اضمحلال — y=-1",correct:true,explain:"صحيح: 0<0.8<1 اضمحلال، d=-1."},{text:"نمو — y=-1",correct:false,explain:"خاطئ: 0.8<1 اضمحلال."},{text:"اضمحلال — y=0",correct:false,explain:"خاطئ: d=-1 خط التقارب."},{text:"نمو — y=0.5",correct:false,explain:"خاطئ: اضمحلال وخط التقارب -1."}]},
+    {funcStr:"f(x) = 0.25^{x-4} + 1", params:{a:1,base:0.25,shift:4,shiftSign:-1,d:1}, asks:"المطلوب: نوع الدالة + الإزاحة الأفقية", hint:"الأساس <1 اضمحلال. x-c يمين c.", options:[{text:"اضمحلال — يمين 4",correct:true,explain:"صحيح: 0.25<1 اضمحلال، x-4 يمين 4."},{text:"نمو — يمين 4",correct:false,explain:"خاطئ: 0.25<1 اضمحلال."},{text:"اضمحلال — يسار 4",correct:false,explain:"خاطئ: x-4 يمين."},{text:"نمو — يسار 4",correct:false,explain:"خاطئ: كلاهما خطأ."}]},
+    {funcStr:"f(x) = 3^x + 2", params:{a:1,base:3,shift:0,shiftSign:1,d:2}, asks:"المطلوب: خط التقارب + المدى", hint:"d يحدد خط التقارب والمدى.", options:[{text:"y=2 — المدى (2, ∞)",correct:true,explain:"صحيح: d=2 خط التقارب، a>0 المدى (2, ∞)."},{text:"y=0 — المدى (0, ∞)",correct:false,explain:"خاطئ: d=2 رفع خط التقارب."},{text:"y=3 — المدى (3, ∞)",correct:false,explain:"خاطئ: الأساس لا يؤثر على خط التقارب."},{text:"y=2 — المدى [2, ∞)",correct:false,explain:"خاطئ: المدى مفتوح عند 2."}]},
+    {funcStr:"f(x) = (1/2)^x", params:{a:1,base:0.5,shift:0,shiftSign:1,d:0}, asks:"المطلوب: نوع الدالة + مقطع y", hint:"الأساس <1 اضمحلال. مقطع y عند x=0.", options:[{text:"اضمحلال — مقطع y = 1",correct:true,explain:"صحيح: 0.5<1 اضمحلال. f(0)=(1/2)^0=1."},{text:"نمو — مقطع y = 1",correct:false,explain:"خاطئ: 0.5<1 اضمحلال."},{text:"اضمحلال — مقطع y = 0.5",correct:false,explain:"خاطئ: مقطع y هو 1."},{text:"اضمحلال — مقطع y = 0",correct:false,explain:"خاطئ: أي عدد أس صفر = 1."}]},
+    {funcStr:"f(x) = 2^{x-1}", params:{a:1,base:2,shift:1,shiftSign:-1,d:0}, asks:"المطلوب: الإزاحة الأفقية", hint:"x-c يعني يمين c وحدات.", options:[{text:"يمين 1 وحدة",correct:true,explain:"صحيح: x-1 يمين 1."},{text:"يسار 1 وحدة",correct:false,explain:"خاطئ: x-c يعني يمين."},{text:"لا يوجد إزاحة",correct:false,explain:"خاطئ: وجود -1 يعني إزاحة."},{text:"يمين 2 وحدة",correct:false,explain:"خاطئ: الإزاحة 1 فقط."}]}
+  ],
+  medium: [
+    {funcStr:"f(x) = 2^{x-3} + 4", params:{a:1,base:2,shift:3,shiftSign:-1,d:4}, asks:"المطلوب: الإزاحة الأفقية + خط التقارب", hint:"x-c يمين، d خط التقارب.", options:[{text:"يمين 3 — y=4",correct:true,explain:"صحيح: x-3 يمين 3، d=4."},{text:"يسار 3 — y=4",correct:false,explain:"خاطئ: x-3 يمين."},{text:"يمين 3 — y=0",correct:false,explain:"خاطئ: d=4 خط التقارب."},{text:"يمين 4 — y=3",correct:false,explain:"خاطئ: الإزاحة 3 وخط التقارب 4."}]},
+    {funcStr:"f(x) = 3(2)^{x+2} - 1", params:{a:3,base:2,shift:2,shiftSign:1,d:-1}, asks:"المطلوب: خط التقارب + مقطع y", hint:"d خط التقارب. مقطع y: f(0).", options:[{text:"y=-1 — مقطع y = 11",correct:true,explain:"صحيح: d=-1. f(0)=3(2)^2-1=11."},{text:"y=0 — مقطع y = 11",correct:false,explain:"خاطئ: d=-1 خط التقارب."},{text:"y=-1 — مقطع y = 3",correct:false,explain:"خاطئ: f(0)=11."},{text:"y=3 — مقطع y = -1",correct:false,explain:"خاطئ: العكس."}]},
+    {funcStr:"f(x) = 0.5^{x+1} + 3", params:{a:1,base:0.5,shift:1,shiftSign:1,d:3}, asks:"المطلوب: نوع الدالة + المدى", hint:"0<base<1 اضمحلال. المدى من d.", options:[{text:"اضمحلال — (3, ∞)",correct:true,explain:"صحيح: 0.5<1 اضمحلال، d=3."},{text:"نمو — (3, ∞)",correct:false,explain:"خاطئ: 0.5<1 اضمحلال."},{text:"اضمحلال — (0, ∞)",correct:false,explain:"خاطئ: d=3 خط التقارب."},{text:"اضمحلال — [3, ∞)",correct:false,explain:"خاطئ: المدى مفتوح."}]},
+    {funcStr:"f(x) = 2(3)^{x-1} + 2", params:{a:2,base:3,shift:1,shiftSign:-1,d:2}, asks:"المطلوب: الإزاحة الأفقية + خط التقارب", hint:"x-c يمين. d خط التقارب.", options:[{text:"يمين 1 — y=2",correct:true,explain:"صحيح: x-1 يمين 1، d=2."},{text:"يسار 1 — y=2",correct:false,explain:"خاطئ: x-1 يمين."},{text:"يمين 1 — y=0",correct:false,explain:"خاطئ: d=2."},{text:"يمين 2 — y=1",correct:false,explain:"خاطئ: كلاهما خطأ."}]},
+    {funcStr:"f(x) = 4^x - 3", params:{a:1,base:4,shift:0,shiftSign:1,d:-3}, asks:"المطلوب: مقطع y + خط التقارب", hint:"f(0) للمقطع. d خط التقارب.", options:[{text:"مقطع y = -2 — y=-3",correct:true,explain:"صحيح: f(0)=4^0-3=-2، d=-3."},{text:"مقطع y = 1 — y=-3",correct:false,explain:"خاطئ: f(0)=-2."},{text:"مقطع y = -2 — y=0",correct:false,explain:"خاطئ: d=-3."},{text:"مقطع y = -3 — y=-2",correct:false,explain:"خاطئ: العكس."}]},
+    {funcStr:"f(x) = 0.4^{x-2}", params:{a:1,base:0.4,shift:2,shiftSign:-1,d:0}, asks:"المطلوب: نوع الدالة + الإزاحة", hint:"base<1 اضمحلال. x-c يمين.", options:[{text:"اضمحلال — يمين 2",correct:true,explain:"صحيح: 0.4<1 اضمحلال، x-2 يمين 2."},{text:"نمو — يمين 2",correct:false,explain:"خاطئ: 0.4<1 اضمحلال."},{text:"اضمحلال — يسار 2",correct:false,explain:"خاطئ: x-2 يمين."},{text:"نمو — يسار 2",correct:false,explain:"خاطئ: كلاهما خطأ."}]},
+    {funcStr:"f(x) = 5^{x+3} - 4", params:{a:1,base:5,shift:3,shiftSign:1,d:-4}, asks:"المطلوب: خط التقارب + المدى", hint:"d خط التقارب والمدى.", options:[{text:"y=-4 — (-4, ∞)",correct:true,explain:"صحيح: d=-4، a>0 المدى (-4, ∞)."},{text:"y=0 — (0, ∞)",correct:false,explain:"خاطئ: d=-4."},{text:"y=-4 — [-4, ∞)",correct:false,explain:"خاطئ: المدى مفتوح."},{text:"y=5 — (5, ∞)",correct:false,explain:"خاطئ: base لا يؤثر."}]},
+    {funcStr:"f(x) = 2^x + 5", params:{a:1,base:2,shift:0,shiftSign:1,d:5}, asks:"المطلوب: مقطع y", hint:"f(0) للمقطع.", options:[{text:"مقطع y = 6",correct:true,explain:"صحيح: f(0)=2^0+5=6."},{text:"مقطع y = 5",correct:false,explain:"خاطئ: f(0)=6."},{text:"مقطع y = 7",correct:false,explain:"خاطئ: f(0)=6."},{text:"مقطع y = 1",correct:false,explain:"خاطئ: f(0)=6."}]}
+  ],
+  hard: [
+    {funcStr:"f(x) = -2(3)^{x-1} + 4", params:{a:-2,base:3,shift:1,shiftSign:-1,d:4}, asks:"المطلوب: الانعكاس + خط التقارب + المدى", hint:"a<0 انعكاس حول x. d خط التقارب.", options:[{text:"انعكاس أفقي — y=4 — (-∞, 4)",correct:true,explain:"صحيح: a=-2 انعكاس، d=4، a<0 المدى (-∞, 4)."},{text:"انعكاس أفقي — y=4 — (4, ∞)",correct:false,explain:"خاطئ: a<0 المدى أقل من d."},{text:"لا انعكاس — y=4 — (4, ∞)",correct:false,explain:"خاطئ: a=-2 انعكاس."},{text:"انعكاس أفقي — y=0 — (-∞, 0)",correct:false,explain:"خاطئ: d=4 خط التقارب."}]},
+    {funcStr:"f(x) = 3(0.5)^{-x} + 1", params:{a:3,base:0.5,shift:0,shiftSign:-1,d:1}, asks:"المطلوب: تأثير الأس السالب + نوع الدالة", hint:"الأس السالب يعكس نوع الدالة.", options:[{text:"نمو (0.5^{-x} = 2^x)",correct:true,explain:"صحيح: 0.5^{-x}=2^x، 2>1 نمو."},{text:"اضمحلال",correct:false,explain:"خاطئ: الأس السالب يحول لنمو."},{text:"لا تأثير — اضمحلال",correct:false,explain:"خاطئ: الأس السالب يغير النوع."},{text:"نمو وaضمحلال",correct:false,explain:"خاطئ: نمو فقط."}]},
+    {funcStr:"f(x) = 0.5(4)^{2x} - 3", params:{a:0.5,base:4,shift:0,shiftSign:1,d:-3}, asks:"المطلوب: تأثير 2x على النمو", hint:"2x يسرّع النمو (تمدد أفقي).", options:[{text:"نمو أسرع",correct:true,explain:"صحيح: 2x يضاعف الأس، نمو أسرع."},{text:"نمو أبطأ",correct:false,explain:"خاطئ: 2x يسرّع."},{text:"لا تأثير",correct:false,explain:"خاطئ: 2x يؤثر."},{text:"اضمحلال",correct:false,explain:"خاطئ: 4>1 نمو."}]},
+    {funcStr:"f(x) = -0.5(2)^{x+1} + 3", params:{a:-0.5,base:2,shift:1,shiftSign:1,d:3}, asks:"المطلوب: الانعكاس + الإزاحة + خط التقارب", hint:"a<0 انعكاس. x+c يسار. d خط التقارب.", options:[{text:"انعكاس — يسار 1 — y=3",correct:true,explain:"صحيح: a=-0.5 انعكاس، x+1 يسار 1، d=3."},{text:"انعكاس — يمين 1 — y=3",correct:false,explain:"خاطئ: x+1 يسار."},{text:"لا انعكاس — يسار 1 — y=3",correct:false,explain:"خاطئ: a<0 انعكاس."},{text:"انعكاس — يسار 1 — y=0",correct:false,explain:"خاطئ: d=3."}]},
+    {funcStr:"f(x) = 2(3)^{x/2} + 1", params:{a:2,base:3,shift:0,shiftSign:1,d:1}, asks:"المطلوب: تأثير x/2 على النمو", hint:"x/2 يبطئ النمو (انضغاط أفقي).", options:[{text:"نمو أبطأ",correct:true,explain:"صحيح: x/2 يقسم الأس، نمو أبطأ."},{text:"نمو أسرع",correct:false,explain:"خاطئ: x/2 يبطئ."},{text:"لا تأثير",correct:false,explain:"خاطئ: x/2 يؤثر."},{text:"اضمحلال",correct:false,explain:"خاطئ: 3>1 نمو."}]},
+    {funcStr:"f(x) = -3(0.6)^{x-2} + 5", params:{a:-3,base:0.6,shift:2,shiftSign:-1,d:5}, asks:"المطلوب: نوع الدالة + المدى", hint:"0.6<1 اضمحلال. a<0 يعكس المدى.", options:[{text:"اضمحلال — (-∞, 5)",correct:true,explain:"صحيح: 0.6<1 اضمحلال، a<0 المدى (-∞, 5)."},{text:"اضمحلال — (5, ∞)",correct:false,explain:"خاطئ: a<0 يعكس المدى."},{text:"نمو — (-∞, 5)",correct:false,explain:"خاطئ: 0.6<1 اضمحلال."},{text:"اضمحلال — [5, ∞)",correct:false,explain:"خاطئ: a<0 والمدى مفتوح."}]},
+    {funcStr:"f(x) = 4(2)^{-x+3} - 2", params:{a:4,base:2,shift:-3,shiftSign:1,d:-2}, asks:"المطلوب: نوع الدالة (بعد الأس السالب)", hint:"-x يعكس النوع. -x+3 = -(x-3).", options:[{text:"اضمحلال (2^{-x} = 0.5^x)",correct:true,explain:"صحيح: -x يحول 2^x لاضمحلال 0.5^x."},{text:"نمو",correct:false,explain:"خاطئ: -x يعكس لاضمحلال."},{text:"لا تأثير — نمو",correct:false,explain:"خاطئ: -x يغير النوع."},{text:"نمو وaضمحلال",correct:false,explain:"خاطئ: اضمحلال فقط."}]},
+    {funcStr:"f(x) = -2(5)^{2x-4} + 6", params:{a:-2,base:5,shift:2,shiftSign:-1,d:6}, asks:"المطلوب: الانعكاس + تأثير 2x + خط التقارب", hint:"a<0 انعكاس. 2x يسرّع. d=6.", options:[{text:"انعكاس — نمو أسرع — y=6",correct:true,explain:"صحيح: a=-2 انعكاس، 2x يسرّع، d=6."},{text:"انعكاس — نمو أبطأ — y=6",correct:false,explain:"خاطئ: 2x يسرّع."},{text:"لا انعكاس — نمو أسرع — y=6",correct:false,explain:"خاطئ: a=-2 انعكاس."},{text:"انعكاس — نمو أسرع — y=0",correct:false,explain:"خاطئ: d=6."}]}
+  ]
+};
+
+let currentLevel = '';
+let score = 0;
+let charts = {};
+
+function goToLevelSelection() {
+  document.getElementById('startPage').style.display = 'none';
+  document.getElementById('levelPage').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startQuiz(level) {
+  currentLevel = level;
+  score = 0;
+  charts = {};
+  
+  document.getElementById('levelPage').style.display = 'none';
+  document.getElementById('quizPage').classList.add('active');
+  window.scrollTo(0, 0);
+  
+  const titles = {
+    easy: 'اختبار المستوى السهل 🟢',
+    medium: 'اختبار المستوى المتوسط 🟡',
+    hard: 'اختبار المستوى الصعب 🔴'
+  };
+  
+  document.getElementById('quizTitle').textContent = titles[level];
+  document.getElementById('currentScore').textContent = '0';
+  
+  renderQuestions(level);
+}
+
+function renderQuestions(level) {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  
+  const questions = allQuestions[level];
+  
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = `q${idx}`;
+    
+    card.innerHTML = `
+      <div class="panel-right">
+        <div class="funcTitle">السؤال ${idx + 1}: ${q.funcStr}</div>
+        <div class="asks">${q.asks}</div>
+        <canvas id="chart${idx}" width="400" height="300"></canvas>
+        <button class="btn-hint" onclick="showHint(${idx})">💡 عرض التلميح</button>
+        <div id="hint${idx}" style="display:none; margin-top:15px; padding:15px; background:#fff3cd; border-radius:10px; border-right:4px solid #ffc107;"></div>
+      </div>
+      <div class="panel-left">
+        <div class="options" id="opts${idx}"></div>
+        <div id="explain${idx}"></div>
+      </div>
+    `;
+    
+    container.appendChild(card);
+    
+    renderOptions(q, idx);
+    drawChart(q, idx);
+  });
+}
+
+function renderOptions(q, qIdx) {
+  const optsDiv = document.getElementById(`opts${qIdx}`);
+  
+  // نسخ الخيارات وخلطها عشوائياً
+  const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+  
+  // حروف الخيارات
+  const letters = ['a', 'b', 'c', 'd'];
+  
+  shuffledOptions.forEach((opt, optIdx) => {
+    const div = document.createElement('div');
+    div.className = 'opt';
+    div.textContent = `${letters[optIdx]}) ${opt.text}`;
+    div.onclick = () => checkAnswer(qIdx, optIdx, opt.correct, opt.explain, shuffledOptions);
+    optsDiv.appendChild(div);
+  });
+}
+
+function checkAnswer(qIdx, optIdx, isCorrect, explanation, shuffledOptions) {
+  const optsDiv = document.getElementById(`opts${qIdx}`);
+  const opts = optsDiv.querySelectorAll('.opt');
+  
+  if (opts[0].classList.contains('answered')) return;
+  
+  opts.forEach(o => o.classList.add('answered'));
+  
+  if (isCorrect) {
+    opts[optIdx].classList.add('correct');
+    score++;
+    document.getElementById('currentScore').textContent = score;
+  } else {
+    opts[optIdx].classList.add('wrong');
+    // إيجاد الإجابة الصحيحة في القائمة المخلوطة
+    shuffledOptions.forEach((o, i) => {
+      if (o.correct) opts[i].classList.add('correct');
+    });
+  }
+  
+  const explainDiv = document.getElementById(`explain${qIdx}`);
+  explainDiv.innerHTML = `<div class="explanation-box ${isCorrect ? 'good' : 'bad'}">${explanation}</div>`;
+}
+
+function showHint(qIdx) {
+  const hintDiv = document.getElementById(`hint${qIdx}`);
+  const q = allQuestions[currentLevel][qIdx];
+  
+  if (hintDiv.style.display === 'none') {
+    hintDiv.style.display = 'block';
+    hintDiv.textContent = '💡 ' + q.hint;
+  } else {
+    hintDiv.style.display = 'none';
+  }
+}
+
+function drawChart(q, idx) {
+  const canvas = document.getElementById(`chart${idx}`);
+  const ctx = canvas.getContext('2d');
+  
+  const p = q.params;
+  const xVals = [];
+  const yVals = [];
+  
+  for (let x = -3; x <= 5; x += 0.2) {
+    const exponent = p.shiftSign > 0 ? (x + p.shift) : (x - p.shift);
+    const y = p.a * Math.pow(p.base, exponent) + p.d;
+    xVals.push(x);
+    yVals.push(y);
+  }
+  
+  charts[idx] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: xVals,
+      datasets: [{
+        label: q.funcStr,
+        data: yVals,
+        borderColor: '#667eea',
+        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+        borderWidth: 3,
+        pointRadius: 0,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          min: -3,
+          max: 5,
+          ticks: { color: '#6b7280', font: { size: 11 } },
+          grid: { color: '#e5e7eb' }
+        },
+        y: {
+          min: Math.min(...yVals, p.d - 2),
+          max: Math.max(...yVals, p.d + 5),
+          ticks: { color: '#6b7280', font: { size: 11 } },
+          grid: { color: '#e5e7eb' }
+        }
+      }
+    }
+  });
+}
+
+function showFinalScore() {
+  const finalDiv = document.getElementById('finalScore');
+  const gradeText = document.getElementById('finalGradeText');
+  const message = document.getElementById('finalMessage');
+  
+  gradeText.textContent = `${score} / 8`;
+  
+  if (score >= 7) {
+    gradeText.className = 'final-grade grade-good';
+    message.textContent = '🎉 ممتاز جداً! أنت تفهم الدوال الأسية بشكل رائع!';
+  } else if (score >= 5) {
+    gradeText.className = 'final-grade grade-good';
+    message.textContent = '👍 جيد جداً! لديك فهم قوي للدوال الأسية.';
+  } else if (score >= 3) {
+    gradeText.className = 'final-grade';
+    gradeText.style.color = '#f59e0b';
+    message.textContent = '📚 جيد! لكن يمكنك التحسن بمزيد من المراجعة.';
+  } else {
+    gradeText.className = 'final-grade grade-bad';
+    message.textContent = '💪 حاول مرة أخرى! راجع المفاهيم الأساسية.';
+  }
+  
+  finalDiv.style.display = 'block';
+}
+
+function resetAndBackToLevels() {
+  document.getElementById('finalScore').style.display = 'none';
+  document.getElementById('quizPage').classList.remove('active');
+  document.getElementById('levelPage').classList.add('active');
+  window.scrollTo(0, 0);
+  
+  Object.values(charts).forEach(chart => chart.destroy());
+  charts = {};
+}
+
+function backToLevelSelection() {
+  if (confirm('هل أنت متأكد من الرجوع؟ سيتم فقدان تقدمك الحالي.')) {
+    document.getElementById('quizPage').classList.remove('active');
+    document.getElementById('levelPage').classList.add('active');
+    window.scrollTo(0, 0);
+    
+    Object.values(charts).forEach(chart => chart.destroy());
+    charts = {};
+  }
+}
+</script>
+
+</body>
+</html>
